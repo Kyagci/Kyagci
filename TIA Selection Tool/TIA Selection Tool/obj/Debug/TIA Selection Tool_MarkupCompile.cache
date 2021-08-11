@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\kyagci\Documents\Privat\Bewerbung\Projekt\TIA Selection Tool\TIA Selection Tool\obj\Debug\
+C:\Users\kyagci\Documents\Privat\Bewerbung\Projekt\Kyagci\TIA Selection Tool\TIA Selection Tool\obj\Debug\
 TIA_Selection_Tool
 none
 false
 DEBUG;TRACE
-C:\Users\kyagci\Documents\Privat\Bewerbung\Projekt\TIA Selection Tool\TIA Selection Tool\App.xaml
+C:\Users\kyagci\Documents\Privat\Bewerbung\Projekt\Kyagci\TIA Selection Tool\TIA Selection Tool\App.xaml
 32131594829
 
-14443821613
-181498007211
+15-398537754
+181677895689
 MainWindow.xaml;MVVM\View\ContentView.xaml;MVVM\View\MenuView.xaml;
 
-False
+True
 

@@ -1,60 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using TIA_Selection_Tool.Core;
 
 namespace TIA_Selection_Tool.MVVM.Model
 {
-    class GroupData : FilePicker
+    public class GroupData : FilePicker
     {
         public static List<string> TypeName = new List<string>();
-        public static List<string> PropertyName = new List<string>();
-        
+        XDocument xml = xmltree;
+
         public void GroupTypename()
         {
-            FilePicker FP = new FilePicker();
-            XDocument xml = xmltree;
+
             List<string> orderList = new List<string>();
             var xNodes = xml.Descendants("node").GroupBy(x => (string)x.Attribute("Type")).ToList();
 
             //For each orderProperty, get all attributes
             foreach (var attribute in xNodes)
             {
-                 orderList.Add(attribute.Key.ToString());
+                orderList.Add(attribute.Key.ToString());
 
-            }   
-            foreach (var list in orderList) 
+            }
+            foreach (var list in orderList)
             {
                 Console.WriteLine(list);
                 TypeName.Add(list);
             }
 
         }
-        public void GroupPropertyname()
+
+        public void ReadXmlFile()
         {
-            FilePicker FP = new FilePicker();
-            XDocument xml = xmltree;
-            List<Dictionary<string, string>> orderList = new List<Dictionary<string, string>>();
-            List<XNode> yNode = new List<XNode>();
+            XmlDataCollection XmlDatas = null;
+            string path = "C:/Users/kyagci/Documents/Privat/Bewerbung/Projekt/WPF_Teil 1/Tia-Files/Test2.tia";
 
-            //Get Elements
+            XmlSerializer serializer = new XmlSerializer(typeof(XmlDataCollection));
 
-            foreach (var node in xml.Root.Elements("property"))
-            {
-                string name = node.Element("Key").Value;
-            }
+            StreamReader reader = new StreamReader(path);
+            XmlDatas = (XmlDataCollection)serializer.Deserialize(reader);
+            reader.Close();
+        }
+
+        [Serializable()]
+        public class XmlData
+        {
+            [System.Xml.Serialization.XmlElement("key")]
+            public string key { get; set; }
+
+            [System.Xml.Serialization.XmlElement("value")]
+            public string value { get; set; }
+
+            //[System.Xml.Serialization.XmlElement("Model")]
+            //public string Model { get; set; }
+        }
+
+
+        [Serializable()]
+        [System.Xml.Serialization.XmlRoot("XmlDataCollection")]
+        public class XmlDataCollection
+        {
+            [XmlArray("XmlDatas")]
+            [XmlArrayItem("XmlData", typeof(XmlData))]
+            public XmlData[] XmlData { get; set; }
 
         }
 
-        public List<string> returnelementlist()
-        {
-            return PropertyName;
-        }
-
-        public List<string> returntypelist() 
+        public List<string> returntypelist()
         {
             return TypeName;
         }
